@@ -28,10 +28,10 @@ final class DemoAChainIntro: UIViewController {
     private func configureViews() {
 
         let label1 = makeLabel(with: "Welcome")
-        let label2 = makeLabel(with: "Welcome")
-        let label3 = makeLabel(with: "Welcome")
-        let label4 = makeLabel(with: "Welcome")
-        let label5 = makeLabel(with: "Welcome")
+        let label2 = makeLabel(with: "to this demo")
+        let label3 = makeLabel(with: "AChain helps you")
+        let label4 = makeLabel(with: "with chained and nested animations")
+        let label5 = makeLabel(with: "Have fun ;)")
 
         let colorView1 = makeView(with: .blue)
         let colorView2 = makeView(with: .green)

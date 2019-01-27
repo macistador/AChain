@@ -8,7 +8,11 @@
 
 import UIKit
 
-// MARK : Built-in elementary animations
+/*
+ * AChain
+ * Built-in elementary animations
+ * Compose this helpers for a short & clean syntaxe
+ */
 
 // Used on a .chain
 extension UIView.AChain {

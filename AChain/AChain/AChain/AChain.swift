@@ -33,7 +33,7 @@ extension UIView {
         /// - Parameter anim: A block object containing the changes to commit to the views
         /// - Returns: Animator with its two animations chained
 
-        func chain(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIViewAnimationOptions = [], anim: @escaping animBlockType = {}) -> AChain {
+        func chain(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], anim: @escaping animBlockType = {}) -> AChain {
             var parameters                   = ChainAnimationParameters(duration: duration)
             parameters.delay                 = delay
             parameters.options               = options
@@ -44,7 +44,7 @@ extension UIView {
         }
 
         /// FIXME: documentation needed...
-        convenience init(withDuration duration : TimeInterval = 0, delay: TimeInterval = 0, options: UIViewAnimationOptions = []) {
+        convenience init(withDuration duration : TimeInterval = 0, delay: TimeInterval = 0, options: UIView.AnimationOptions = []) {
             var parameters         = ChainAnimationParameters(duration: duration)
             parameters.options     = options
             parameters.delay       = delay
@@ -137,10 +137,10 @@ extension UIView {
         var cancelCompletion: cancelBlockType   = {}
 
         var delay: TimeInterval             = 0
-        var options: UIViewAnimationOptions = []
+        var options: UIView.AnimationOptions = []
         let duration: TimeInterval
 
-        init(animation: @escaping animBlockType = {}, completion: @escaping completBlockType = {finished in}, cancelCompletion: @escaping cancelBlockType = {}, delay: TimeInterval = 0, options: UIViewAnimationOptions = [], duration: TimeInterval) {
+        init(animation: @escaping animBlockType = {}, completion: @escaping completBlockType = {finished in}, cancelCompletion: @escaping cancelBlockType = {}, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], duration: TimeInterval) {
             self.animations       = [animation]
             self.completion       = completion
             self.cancelCompletion = cancelCompletion
@@ -156,7 +156,7 @@ extension UIView {
 // MARK: Sugar syntax
 
 extension UIView {
-    static func chainAnimate(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIViewAnimationOptions = [], anim: @escaping animBlockType) -> AChain {
+    static func chainAnimate(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], anim: @escaping animBlockType) -> AChain {
         return AChain().chain(withDuration: duration, delay: delay, options: options, anim: anim)
     }
 }
