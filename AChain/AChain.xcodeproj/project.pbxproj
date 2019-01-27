@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040D48C421FDF639000CF85B /* DemoAChainIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D48C321FDF639000CF85B /* DemoAChainIntro.swift */; };
+		040D48C621FDF778000CF85B /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D48C521FDF778000CF85B /* Helpers.swift */; };
+		040D48C821FE0E43000CF85B /* AChain-Builtin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D48C721FE0E43000CF85B /* AChain-Builtin.swift */; };
 		043CE42B2085C3D100F4669E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CE42A2085C3D100F4669E /* AppDelegate.swift */; };
 		043CE4302085C3D200F4669E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043CE42E2085C3D200F4669E /* Main.storyboard */; };
 		043CE4322085C3D300F4669E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 043CE4312085C3D300F4669E /* Assets.xcassets */; };
@@ -27,9 +30,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040D48C321FDF639000CF85B /* DemoAChainIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAChainIntro.swift; sourceTree = "<group>"; };
+		040D48C521FDF778000CF85B /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		040D48C721FE0E43000CF85B /* AChain-Builtin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AChain-Builtin.swift"; sourceTree = "<group>"; };
+		040D48C921FE1241000CF85B /* DemoAChain-Beta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DemoAChain-Beta.swift"; sourceTree = "<group>"; };
 		043CE4272085C3D100F4669E /* AChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		043CE42A2085C3D100F4669E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		043CE42C2085C3D200F4669E /* DemoAChain-Beta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DemoAChain-Beta.swift"; sourceTree = "<group>"; };
 		043CE42F2085C3D200F4669E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		043CE4312085C3D300F4669E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		043CE4342085C3D300F4669E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,6 +67,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040D48CB21FE1245000CF85B /* [Beta] */ = {
+			isa = PBXGroup;
+			children = (
+				043CE44D2085C65F00F4669E /* AChain-Beta.swift */,
+				040D48C921FE1241000CF85B /* DemoAChain-Beta.swift */,
+			);
+			path = "[Beta]";
+			sourceTree = "<group>";
+		};
+		040D48CC21FE125B000CF85B /* AChain */ = {
+			isa = PBXGroup;
+			children = (
+				043CE44C2085C3FA00F4669E /* AChain.h */,
+				043CE44A2085C3EA00F4669E /* AChain.swift */,
+				040D48C721FE0E43000CF85B /* AChain-Builtin.swift */,
+			);
+			path = AChain;
+			sourceTree = "<group>";
+		};
 		043CE41E2085C3D100F4669E = {
 			isa = PBXGroup;
 			children = (
@@ -82,16 +107,16 @@
 		043CE4292085C3D100F4669E /* AChain */ = {
 			isa = PBXGroup;
 			children = (
+				040D48CC21FE125B000CF85B /* AChain */,
 				043CE42A2085C3D100F4669E /* AppDelegate.swift */,
+				040D48C321FDF639000CF85B /* DemoAChainIntro.swift */,
 				04FFCC5A2086458A007EB647 /* DemoAChain.swift */,
-				043CE42C2085C3D200F4669E /* DemoAChain-Beta.swift */,
+				040D48C521FDF778000CF85B /* Helpers.swift */,
 				043CE42E2085C3D200F4669E /* Main.storyboard */,
 				043CE4312085C3D300F4669E /* Assets.xcassets */,
 				043CE4332085C3D300F4669E /* LaunchScreen.storyboard */,
 				043CE4362085C3D300F4669E /* Info.plist */,
-				043CE44C2085C3FA00F4669E /* AChain.h */,
-				043CE44A2085C3EA00F4669E /* AChain.swift */,
-				043CE44D2085C65F00F4669E /* AChain-Beta.swift */,
+				040D48CB21FE1245000CF85B /* [Beta] */,
 			);
 			path = AChain;
 			sourceTree = "<group>";
@@ -206,8 +231,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				043CE42B2085C3D100F4669E /* AppDelegate.swift in Sources */,
 				043CE44B2085C3EA00F4669E /* AChain.swift in Sources */,
+				040D48C821FE0E43000CF85B /* AChain-Builtin.swift in Sources */,
+				040D48C621FDF778000CF85B /* Helpers.swift in Sources */,
+				043CE42B2085C3D100F4669E /* AppDelegate.swift in Sources */,
+				040D48C421FDF639000CF85B /* DemoAChainIntro.swift in Sources */,
 				04FFCC5B2086458A007EB647 /* DemoAChain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

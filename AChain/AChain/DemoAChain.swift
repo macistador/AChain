@@ -19,9 +19,7 @@ import UIKit
 
 class DemoAChain: UIViewController {
 
-    var blueView: UIView!
     var redView: UIView!
-    var greenView: UIView!
     var activeChain: UIView.AChain?
 
     @IBOutlet weak var startButton: UIButton!
@@ -40,18 +38,6 @@ class DemoAChain: UIViewController {
         redView.translatesAutoresizingMaskIntoConstraints = false
         redView.backgroundColor = .red
         view.addSubview(redView)
-
-        //    blueView = UIView()
-        //    blueView.frame = CGRect(x: 235, y: 101, width: 93, height: 85)
-        //    blueView.translatesAutoresizingMaskIntoConstraints = false
-        //    blueView.backgroundColor = .blue
-        //    view.addSubview(blueView)
-        //
-        //    greenView = UIView()
-        //    greenView.frame = CGRect(x: 141, y: 235, width: 93, height: 85)
-        //    greenView.translatesAutoresizingMaskIntoConstraints = false
-        //    greenView.backgroundColor = .green
-        //    view.addSubview(greenView)
     }
 }
 
@@ -60,9 +46,10 @@ class DemoAChain: UIViewController {
 
 extension DemoAChain {
 
-    @IBAction func startAction0(_ sender: Any) {
+    /// This is how you would have done animations without AChain
+    @IBAction func startAction_NOT_CALLED(_ sender: Any) {
 
-        showVanishingMessage("Animation starts...")
+        showVanishing(message: "Animation starts...")
 
         // Classic method 1
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseIn], animations: {
@@ -100,38 +87,50 @@ extension DemoAChain {
             }
         })
 
-
+        //
+        // Not bad
+        // but too verbose when we need to chain multiple animations...
+        //
     }
 }
 
 
-// MARK: Same animations with AChain without helpers
+// MARK: Same animations with AChain, with and without helpers
+// For usual animation needs it's shorter and cleaner to use the built-in helpers
 
 extension DemoAChain {
 
     @IBAction func startAction(_ sender: Any) {
 
-        showVanishingMessage("Animation starts...")
+        showVanishing(message: "Animation starts...")
 
-        // Sample with reference and cancel
+        // Sample with an optional reference needed to cancel the animation
         activeChain = UIView.AChain()
+
+            // All animations in between each "chain link" are executed simulatenously
+
+            // Chain link 1 : Custom animation closure
             .chain(withDuration: 0.5, options: [.curveEaseIn]) {
                 var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
                 transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
                 self.redView.layer.transform = transform
             }
+
+            // Chain link 2 : Animation closure with helper methods
             .chain(withDuration: 1.5) {
-                var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
-                transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
-                self.redView.layer.transform = transform
+                self.redView.move(by: [100, 35])
+                self.redView.rotate(by: 30)
             }
-            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut]) {
-                var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
-                transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
-                self.redView.layer.transform = transform
-            }
+
+            // Chain link 3 : helper methods only
+            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
+            .move(self.redView.layer, by: [100, 35])
+            .rotate(self.redView.layer, by: 30)
+
+            // [...]
+
             .cancelCompletion {
-                self.showVanishingMessage("Animation canceled")
+                self.showVanishing(message: "Animation canceled")
         }
 
         activeChain?.animate()
@@ -139,124 +138,28 @@ extension DemoAChain {
 }
 
 
-// MARK: Samples with AChain and helpers
-
-extension DemoAChain {
-
-    @IBAction func startAction000(_ sender: Any) {
-
-        showVanishingMessage("Animation starts...")
-
-        // Sample 1
-        // ....
-        UIView.AChain()
-            .chain(withDuration: 1.5) { self.redView.scale(by: 30) }
-            .chain(withDuration: 0.5) { self.redView.move(by: [100,35]) }
-            .chain(withDuration: 0.2) { self.redView.rotate(by: -30) }
-            .animate()
-
-        // Sample 2 with separate declaration and start
-        UIView.AChain()
-            .chain(withDuration: 1.5) { self.redView.rotate(by: 30) }
-
-            .chain(withDuration: 0.5, delay: 0.2) {
-                self.redView.move(by: [100,35])
-                self.redView.rotate(by: 30)
-            }
-
-            .chain(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut]) {
-                self.redView.rotate(by: -30)
-                /* ... */
-            }
-            .completion{ _ in
-                // [...]
-            }
-            .animate()
-
-        // Sample 3
-        //
-        UIView.AChain()
-            // Step 1: define any animation you want to happen simultaneously
-            .chain(withDuration: 0.5)
-            .move(layer: self.redView.layer, by: [100,35])
-            .alpha(view: self.redView, to: 0)
-
-            // Step 2: define animations which will happen once the previous step is finished
-            .chain(withDuration: 2.5)
-            .move(layer: self.redView.layer, by: [100,35])
-            .alpha(view: self.redView, to: 1)
-
-            // Step 3 (with custom animation and delay)
-            .chain(withDuration: 0.5, delay: 0.5) {
-                // [...]
-            }
-            .animate()
-
-        // Sample 4 with separate declaration and start
-        // Declare the animation
-        var chain = UIView.AChain()
-            .chain(withDuration: 0.5) { self.redView.move(by: [100,35]) }
-
-        // [...]
-
-        // Add more animations to your chain if you need
-        chain = chain.move(layer: self.redView.layer, by: [10, 0])
-
-        // [...]
-
-        // start the animation when you need it
-        chain.animate()
-    }
-}
-
+// MARK: Cancel and reset actions
 
 extension DemoAChain {
 
     @IBAction func CancelAction(_ sender: Any) {
-        showVanishingMessage("Cancelling animation...")
-        activeChain?.cancel() ?? showVanishingMessage("No active animation detected...")
+        showVanishing(message: "Cancelling animation...")
+        activeChain?.cancel() ?? showVanishing(message: "No active animation detected...")
     }
 
     @IBAction func ResetAction(_ sender: Any) {
-        showVanishingMessage("Reseting animation...")
-        activeChain?.cancel() ?? showVanishingMessage("No active animation detected...")
+        showVanishing(message: "Reseting animation...")
+        activeChain?.cancel() ?? showVanishing(message: "No active animation detected...")
         self.redView.reset()
     }
 }
 
 
-// MARK: methods for the demo
+// MARK: A little message for clarity
 
 extension DemoAChain {
-
-    fileprivate func showVanishingMessage(_ message: String) {
-        let label = UILabel()
-        label.text = message
-        label.frame = CGRect(x: 50, y: 500, width: 200, height: 50)
-        view.addSubview(label)
-
-//        UIView.chainAnimate(withDuration: 1.5, anim: {
-//            label.move(by: CGPoint(x: 0, y: -80))
-//            label.alpha = 0.0
-//        })
-//            .completion({ _ in label.removeFromSuperview()})
-//            .animate()
-
-        UIView
-            // Step 1
-            .AChain(withDuration: 1.5)
-            .move(layer: label.layer, by: [0, -80])
-            .alpha(view: label, to: 0)
-
-//             Step 2
-//            .chain(withDuration: 3.0)
-//            .alpha(view: label, to: 1)
-//            .rotate(layer: label.layer, by: 45)
-//            .scale(layer: label.layer, to: [1.5, 1.5])
-
-            // Completion
-            .completion{ _ in label.removeFromSuperview()}
-            .animate()
+    fileprivate func showVanishing(message: String) {
+        AChain.showVanishing(message: message, in: view, at: [50, 500])
     }
 }
 
