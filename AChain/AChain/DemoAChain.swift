@@ -22,10 +22,11 @@ class DemoAChain: UIViewController {
     var blueView: UIView!
     var redView: UIView!
     var greenView: UIView!
+    var activeChain: UIView.AChain?
 
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var PauseButton: UIButton!
-    @IBOutlet weak var RevertButton: UIButton!
+    @IBOutlet weak var CancelButton: UIButton!
+    @IBOutlet weak var ResetButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,23 +113,28 @@ extension DemoAChain {
 
         showVanishingMessage("Animation starts...")
 
-        UIView.AChain(duration: 1.0, delay: 0, options: [.curveEaseIn], identifier: "red")
-            .chain(duration: 0.5) {
+        // Sample with reference and cancel
+        activeChain = UIView.AChain()
+            .chain(withDuration: 0.5, options: [.curveEaseIn]) {
                 var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
                 transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
                 self.redView.layer.transform = transform
             }
-            .chain(duration: 1.5) {
+            .chain(withDuration: 1.5) {
                 var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
                 transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
                 self.redView.layer.transform = transform
             }
-            .chain(duration: 3.0, delay: 0.5, options: [.curveEaseIn], identifier: "demo") {
+            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut]) {
                 var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
                 transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
                 self.redView.layer.transform = transform
             }
-            .animate()
+            .cancelCompletion {
+                self.showVanishingMessage("Animation canceled")
+        }
+
+        activeChain?.animate()
     }
 }
 
@@ -142,41 +148,79 @@ extension DemoAChain {
         showVanishingMessage("Animation starts...")
 
         // Sample 1
+        // ....
         UIView.AChain()
-            .chain(duration: 1.5) { self.redView.scale(by: 30) }
-            .chain(duration: 0.5) { self.redView.move(by: [100,35]) }
-            .chain(duration: 0.2) { self.redView.rotate(by: -30) }
+            .chain(withDuration: 1.5) { self.redView.scale(by: 30) }
+            .chain(withDuration: 0.5) { self.redView.move(by: [100,35]) }
+            .chain(withDuration: 0.2) { self.redView.rotate(by: -30) }
             .animate()
 
-
-        // Sample 2
+        // Sample 2 with separate declaration and start
         UIView.AChain()
-            .chain(duration: 1.5) { self.redView.rotate(by: 30) }
+            .chain(withDuration: 1.5) { self.redView.rotate(by: 30) }
 
-            .chain(duration: 0.5, delay: 0.2) {
+            .chain(withDuration: 0.5, delay: 0.2) {
                 self.redView.move(by: [100,35])
                 self.redView.rotate(by: 30)
             }
 
-            .chain(duration: 0.2, delay: 0.2, options: [.curveEaseInOut]) {
+            .chain(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut]) {
                 self.redView.rotate(by: -30)
                 /* ... */
             }
-
+            .completion{ _ in
+                // [...]
+            }
             .animate()
+
+        // Sample 3
+        //
+        UIView.AChain()
+            // Step 1: define any animation you want to happen simultaneously
+            .chain(withDuration: 0.5)
+            .move(layer: self.redView.layer, by: [100,35])
+            .alpha(view: self.redView, to: 0)
+
+            // Step 2: define animations which will happen once the previous step is finished
+            .chain(withDuration: 2.5)
+            .move(layer: self.redView.layer, by: [100,35])
+            .alpha(view: self.redView, to: 1)
+
+            // Step 3 (with custom animation and delay)
+            .chain(withDuration: 0.5, delay: 0.5) {
+                // [...]
+            }
+            .animate()
+
+        // Sample 4 with separate declaration and start
+        // Declare the animation
+        var chain = UIView.AChain()
+            .chain(withDuration: 0.5) { self.redView.move(by: [100,35]) }
+
+        // [...]
+
+        // Add more animations to your chain if you need
+        chain = chain.move(layer: self.redView.layer, by: [10, 0])
+
+        // [...]
+
+        // start the animation when you need it
+        chain.animate()
     }
 }
 
 
 extension DemoAChain {
 
-    @IBAction func PauseAction(_ sender: Any) {
-
+    @IBAction func CancelAction(_ sender: Any) {
+        showVanishingMessage("Cancelling animation...")
+        activeChain?.cancel() ?? showVanishingMessage("No active animation detected...")
     }
 
-    @IBAction func RevertAction(_ sender: Any) {
-
-
+    @IBAction func ResetAction(_ sender: Any) {
+        showVanishingMessage("Reseting animation...")
+        activeChain?.cancel() ?? showVanishingMessage("No active animation detected...")
+        self.redView.reset()
     }
 }
 
@@ -191,13 +235,28 @@ extension DemoAChain {
         label.frame = CGRect(x: 50, y: 500, width: 200, height: 50)
         view.addSubview(label)
 
-        UIView.AChain(duration: 1.5).animation {
-            label.move(by: CGPoint(x: 0, y: -80))
-            label.alpha = 0.0
-            }.completion{ _ in label.removeFromSuperview()}.animate()
+//        UIView.chainAnimate(withDuration: 1.5, anim: {
+//            label.move(by: CGPoint(x: 0, y: -80))
+//            label.alpha = 0.0
+//        })
+//            .completion({ _ in label.removeFromSuperview()})
+//            .animate()
 
-        //    UIView.Animator(duration: 1.5).move(layer: label.layer, by: CGPoint(x: 0, y: -80))
-        //      .completion{ _ in label.removeFromSuperview(); label.removeFromSuperview()}.animate()
+        UIView
+            // Step 1
+            .AChain(withDuration: 1.5)
+            .move(layer: label.layer, by: [0, -80])
+            .alpha(view: label, to: 0)
+
+//             Step 2
+//            .chain(withDuration: 3.0)
+//            .alpha(view: label, to: 1)
+//            .rotate(layer: label.layer, by: 45)
+//            .scale(layer: label.layer, to: [1.5, 1.5])
+
+            // Completion
+            .completion{ _ in label.removeFromSuperview()}
+            .animate()
     }
 }
 
