@@ -6,7 +6,7 @@
 AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib in Swift.
 This project is made for simplicity, ease of use and ease of read
 
-![demo](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-logo.png)
+![demo](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-demo.gif)
 
 - [Features](#features)
 - [Requirements](#requirements)
