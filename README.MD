@@ -1,4 +1,4 @@
-![AChain: Easy chaining animations](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-logo.png)
+![AChain: Easy chaining Swift animations](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-logo.png)
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AChain.svg)](https://img.shields.io/cocoapods/v/AChain.svg)
 [![Platform](https://img.shields.io/cocoapods/p/AChain.svg?style=flat)](https://macistador.github.io/AChain)
@@ -33,7 +33,7 @@ This project is made for simplicity, ease of use and ease of read
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate AChain into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AChain', '~> 0.0.5'
+pod 'AChain', '~> 0.0.1'
 ```
 
 ### Manually
