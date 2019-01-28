@@ -118,7 +118,7 @@ extension DemoAChain {
         /// Sample with 3 chained steps reproducing in different ways the same animation
         UIView.AChain()
 
-            // All animations between each chain step are executed simulatenously
+            // All animations between each chain step are executed simultaneously
 
             // Chain step 1 : Sample with custom animation closure
             .chain(withDuration: 0.5, options: [.curveEaseIn]) {

@@ -44,7 +44,100 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ## Usage
 
-TBD...
+This is how you would do some chained animations with raw UIKit
+
+// Classic method 1
+```swift
+   UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseIn], animations: {
+       var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
+       transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
+       view.layer.transform = transform
+   }) { _ in
+
+       UIView.animate(withDuration: 3.0, delay: 0, options: [.curveEaseIn], animations: {
+           var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
+           transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
+           view.layer.transform = transform
+       }) { _ in
+
+           UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseIn], animations: {
+               var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
+               transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
+               view.layer.transform = transform
+           })
+       }
+   }
+```
+
+Classic method 2
+```swift
+   UIView.animateKeyframes(withDuration: 5, delay: 0, options: .calculationModeCubic, animations: {
+       UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.25) {
+           view.transform = CGAffineTransform(scaleX: 2, y: 2)
+       }
+
+       UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.25) {
+           view.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.maxY)
+       }
+
+       UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.25) {
+           view.center = CGPoint(x: self.view.bounds.width, y: self.view.bounds.height)
+       }
+   })
+```
+
+Sample with 3 chained steps reproducing in different ways the same animation
+All animations between each chain step are executed simultaneously
+```swift
+// Chain step 1 : Sample with custom animation closure
+UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim: {
+       // Any animation code as usual...
+        var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
+        transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
+        view.layer.transform = transform
+    })
+
+    // Chain step 2 : Sample animation closure with helper methods
+    .chain(withDuration: 1.5) {
+        view.move(by: [100, 35])
+        view.rotate(by: 30)
+    }
+
+    // Chain step 3 : Sample with helper methods only
+    .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
+    .move(view.layer, by: [100, 35])
+    .rotate(view.layer, by: 30)
+
+    // .chain(...)
+    // [...]
+
+    .animate()
+```
+
+
+Sample with an optional reference needed to cancel the animation
+```swift
+activeChain = UIView
+    .chainAnimate(withDuration: 1.0)
+    .move(view.layer, by: [100, 35])
+    .rotate(view.layer, by: 30)
+
+    .chain(withDuration: 1.5)
+    .move(view.layer, by: [100, 35])
+    .rotate(view.layer, by: 30)
+
+    .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
+    .move(view.layer, by: [100, 35])
+    .rotate(view.layer, by: 30)
+
+    .cancelCompletion { print("Animation canceled") }
+
+// [...]
+
+activeChain.animate()
+// [...]
+activeChain.cancel() // stop the animation, at the end of the current executing chain step
+```
 
 ## License
 
