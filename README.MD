@@ -4,7 +4,6 @@
 [![Platform](https://img.shields.io/cocoapods/p/AChain.svg?style=flat)](https://macistador.github.io/AChain)
 
 AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib in Swift.
-
 This project is made for simplicity, ease of use and ease of read.
 
 ![demo](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-demo.gif)
@@ -119,8 +118,9 @@ UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim
 &nbsp;
 > All animations between each chain step are executed simultaneously
 &nbsp;
+&nbsp;
 
-By keeping a reference to the chain you can
+By keeping a reference to the chain you can:
 - add more steps after the initial definition
 - start the animation in a different moment
 - cancel it anytime
@@ -129,17 +129,11 @@ By keeping a reference to the chain you can
 let activeChain = UIView
     .chainAnimate(withDuration: 1.0)
     .move(view.layer, by: [100, 35])
-    .rotate(view.layer, by: 30)
-
-    .chain(withDuration: 1.5)
-    .move(view.layer, by: [100, 35])
-    .rotate(view.layer, by: 30)
 
 // [...]
 
 activeChain = activeChain
     .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
-    .move(view.layer, by: [100, 35])
     .rotate(view.layer, by: 30)
 
     .cancelCompletion { print("Animation canceled") }
