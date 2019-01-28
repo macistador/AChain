@@ -44,9 +44,9 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ## Usage
 
-This is how you would do some chained animations with raw UIKit
+### This is how you would do some chained animations with raw UIKit
 
-// Classic method 1
+Classic method 1 with raw UIKit
 ```swift
    UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseIn], animations: {
        var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
@@ -69,7 +69,7 @@ This is how you would do some chained animations with raw UIKit
    }
 ```
 
-Classic method 2
+Classic method 2 with raw UIKit
 ```swift
    UIView.animateKeyframes(withDuration: 5, delay: 0, options: .calculationModeCubic, animations: {
        UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.25) {
@@ -86,8 +86,9 @@ Classic method 2
    })
 ```
 
-Sample with 3 chained steps reproducing in different ways the same animation
-All animations between each chain step are executed simultaneously
+### Now let's a look at how AChain can make your code cleaner and easier to read :
+
+First sample with 3 chained steps reproducing the same animation in different ways
 ```swift
 // Chain step 1 : Sample with custom animation closure
 UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim: {
@@ -113,9 +114,14 @@ UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim
 
     .animate()
 ```
+All animations between each chain step are executed simultaneously
 
 
-Sample with an optional reference needed to cancel the animation
+By keeping a reference to the chain you can
+- add more steps after the initial definition
+- start the animation in a different moment
+- cancel it anytime
+
 ```swift
 activeChain = UIView
     .chainAnimate(withDuration: 1.0)
@@ -126,6 +132,9 @@ activeChain = UIView
     .move(view.layer, by: [100, 35])
     .rotate(view.layer, by: 30)
 
+// [...]
+
+activeChain = activeChain
     .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
     .move(view.layer, by: [100, 35])
     .rotate(view.layer, by: 30)
