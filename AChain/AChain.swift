@@ -156,7 +156,7 @@ extension UIView {
 // MARK: Sugar syntax
 
 extension UIView {
-    static func chainAnimate(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], anim: @escaping animBlockType) -> AChain {
+    static func chainAnimate(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], anim: @escaping animBlockType = {}) -> AChain {
         return AChain().chain(withDuration: duration, delay: delay, options: options, anim: anim)
     }
 }

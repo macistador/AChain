@@ -23,7 +23,6 @@ class DemoAChain: UIViewController {
     var activeChain: UIView.AChain?
 
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var CancelButton: UIButton!
     @IBOutlet weak var ResetButton: UIButton!
 
     override func viewDidLoad() {
@@ -100,40 +99,75 @@ extension DemoAChain {
 
 extension DemoAChain {
 
-    @IBAction func startAction(_ sender: Any) {
-
+    fileprivate func startAction1() {
         showVanishing(message: "Animation starts...")
 
-        // Sample with an optional reference needed to cancel the animation
-        activeChain = UIView.AChain()
+        /// Basic sample closest to the default UIKit implementation
+        /// All parameters but the duration are optionnals
+        UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseInOut, .repeat, .autoreverse, .beginFromCurrentState], anim: {
+            self.redView.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.maxY)
+            })
+            .chain(withDuration: 2.0, delay: 0.5, options: [.curveEaseIn]) {
+                self.redView.transform = CGAffineTransform(scaleX: 2, y: 2)
+            }
+            .animate() // start the animations
+    }
 
-            // All animations in between each "chain link" are executed simulatenously
+    fileprivate func startAction2() {
 
-            // Chain link 1 : Custom animation closure
+        /// Sample with 3 chained steps reproducing in different ways the same animation
+        UIView.AChain()
+
+            // All animations between each chain step are executed simulatenously
+
+            // Chain step 1 : Sample with custom animation closure
             .chain(withDuration: 0.5, options: [.curveEaseIn]) {
                 var transform = CATransform3DTranslate(self.redView.layer.transform, 100, 35, 0)
                 transform = CATransform3DRotate(transform, 30, 0.0, 0.0, 1.0)
                 self.redView.layer.transform = transform
             }
 
-            // Chain link 2 : Animation closure with helper methods
+            // Chain step 2 : Sample animation closure with helper methods
             .chain(withDuration: 1.5) {
                 self.redView.move(by: [100, 35])
                 self.redView.rotate(by: 30)
             }
 
-            // Chain link 3 : helper methods only
+            // Chain step 3 : Sample with helper methods only
+            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
+            .move(self.redView.layer, by: [100, 35])
+            .rotate(self.redView.layer, by: 30)
+//            .rotate(label3.layer, by: -90.degreesToRadians)
+
+            // .chain(...)
+            // [...]
+
+            .animate()
+    }
+
+    fileprivate func startAction3() {
+
+        /// Sample with an optional reference needed to cancel the animation
+        activeChain = UIView
+            .chainAnimate(withDuration: 1.0)
+            .move(self.redView.layer, by: [100, 35])
+            .rotate(self.redView.layer, by: 30)
+
+            .chain(withDuration: 1.5)
+            .move(self.redView.layer, by: [100, 35]) //FIXME: not animated !
+            .rotate(self.redView.layer, by: 30)
+
             .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
             .move(self.redView.layer, by: [100, 35])
             .rotate(self.redView.layer, by: 30)
 
-            // [...]
+            .cancelCompletion { self.showVanishing(message: "Animation canceled") }  //FIXME: not called !
 
-            .cancelCompletion {
-                self.showVanishing(message: "Animation canceled")
-        }
+        // [...]
 
         activeChain?.animate()
+        // [...]
+//        activeChain?.cancel() // stop the animation, at the end of the current executing chain step
     }
 }
 
@@ -142,12 +176,21 @@ extension DemoAChain {
 
 extension DemoAChain {
 
-    @IBAction func CancelAction(_ sender: Any) {
+    @IBAction func startStopAction(_ sender: Any) {
+        if let chain = activeChain, !chain.isCancelled {
+            cancelAction()
+        }
+        else {
+            startAction3()
+        }
+    }
+
+    func cancelAction() {
         showVanishing(message: "Cancelling animation...")
         activeChain?.cancel() ?? showVanishing(message: "No active animation detected...")
     }
 
-    @IBAction func ResetAction(_ sender: Any) {
+    @IBAction func resetAction(_ sender: Any) {
         showVanishing(message: "Reseting animation...")
         activeChain?.cancel() ?? showVanishing(message: "No active animation detected...")
         self.redView.reset()

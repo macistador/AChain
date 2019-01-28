@@ -23,3 +23,12 @@ func showVanishing(message: String, in view: UIView, at point: CGPoint) {
         .completion{ _ in label.removeFromSuperview()}
         .animate()
 }
+
+extension BinaryInteger {
+    var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
+}
+
+extension FloatingPoint {
+    var degreesToRadians: Self { return self * .pi / 180 }
+    var radiansToDegrees: Self { return self * 180 / .pi }
+}

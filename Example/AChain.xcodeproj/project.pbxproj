@@ -83,7 +83,8 @@
 				043CE44A2085C3EA00F4669E /* AChain.swift */,
 				040D48C721FE0E43000CF85B /* AChain-Builtin.swift */,
 			);
-			path = AChain;
+			name = AChain;
+			path = ../../AChain;
 			sourceTree = "<group>";
 		};
 		043CE41E2085C3D100F4669E = {
@@ -107,11 +108,11 @@
 		043CE4292085C3D100F4669E /* AChain */ = {
 			isa = PBXGroup;
 			children = (
-				040D48CC21FE125B000CF85B /* AChain */,
-				043CE42A2085C3D100F4669E /* AppDelegate.swift */,
 				040D48C321FDF639000CF85B /* DemoAChainIntro.swift */,
 				04FFCC5A2086458A007EB647 /* DemoAChain.swift */,
 				040D48C521FDF778000CF85B /* Helpers.swift */,
+				040D48CC21FE125B000CF85B /* AChain */,
+				043CE42A2085C3D100F4669E /* AppDelegate.swift */,
 				043CE42E2085C3D200F4669E /* Main.storyboard */,
 				043CE4312085C3D300F4669E /* Assets.xcassets */,
 				043CE4332085C3D300F4669E /* LaunchScreen.storyboard */,

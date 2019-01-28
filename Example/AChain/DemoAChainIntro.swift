@@ -21,25 +21,73 @@ final class DemoAChainIntro: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.subviews.forEach(clean)
+    }
+
+    func clean(_ view: UIView) {
+        view.removeFromSuperview()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         configureViews()
     }
 
     /// Configuring the animable views
     private func configureViews() {
 
-        let label1 = makeLabel(with: "Welcome")
-        let label2 = makeLabel(with: "to this demo")
+        let label1 = self.makeLabel(with: "Welcome")
+        let label2 = self.makeLabel(with: "to this demo")
         let label3 = makeLabel(with: "AChain helps you")
-        let label4 = makeLabel(with: "with chained and nested animations")
+        let label4 = makeLabel(with: "chaining animations")
         let label5 = makeLabel(with: "Have fun ;)")
 
-        let colorView1 = makeView(with: .blue)
-        let colorView2 = makeView(with: .green)
-        let colorView3 = makeView(with: .green)
-        let colorView4 = makeView(with: .green)
-        let colorView5 = makeView(with: .green)
+        UIView
+            .chainAnimate(withDuration: 3.0, delay: 1.0, options: [.curveEaseOut]) {
+                label1.rotate(by: Float(90.degreesToRadians))
+                label1.move(by: [0, 70])
+                label1.alpha = 1
+            }
+            .chain(withDuration: 3.0, delay: 0)
+            .alpha(label3, to: 1)
+            .rotate(label3.layer, by: -90.degreesToRadians)
+            .move(label3.layer, by: [-20, 50])
 
-        animation1(labelView: label1)
+            .animate()
+
+        UIView
+            .AChain()
+            .chain(withDuration: 3.0, delay: 2.0)
+            .alpha(label2, to: 1)
+            .rotate(label2.layer, by: 90.degreesToRadians)
+            .move(label2.layer, by: [100, 120])
+
+            .chain(withDuration: 3.0, delay: 0.5)
+            .alpha(label4, to: 1)
+            .rotate(label4.layer, by: -90.degreesToRadians)
+            .move(label4.layer, by: [-100, 90])
+
+            .chain(withDuration: 0)
+            .move(label5.layer, by: [0, 250])
+
+            .chain(withDuration: 4.0, options: [.curveEaseOut])
+            .alpha(label5, to: 1)
+            .move(label5.layer, by: [0, 100])
+            .scale(label5.layer, to: [1.1, 1.1])
+
+            .animate()
+
+//        let colorView1 = makeView(with: .blue)
+//        let colorView2 = makeView(with: .green)
+//        let colorView3 = makeView(with: .green)
+//        let colorView4 = makeView(with: .green)
+//        let colorView5 = makeView(with: .green)
+
+//        animation1(labelView: label1)
     }
 }
 
@@ -132,12 +180,15 @@ extension DemoAChainIntro {
 
     fileprivate func makeLabel(with message: String) -> UILabel {
         let label = UILabel()
-        label.frame = CGRect(x: 0, y: 0, width: 93, height: 85)
+        let width = (message.count > 30) ? 500 : 300
+        label.frame = CGRect(x: 50, y: 200, width: width, height: 150)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 100, weight: .black)
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .black
         //        label.minimumScaleFactor = 0.1
+        label.text = message
+        label.alpha = 0
         view.addSubview(label)
         return label
     }

@@ -52,28 +52,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtE-ws-YxI">
-                                <rect key="frame" x="73" y="521" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start"/>
-                                <connections>
-                                    <action selector="startAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kql-zS-9hq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xST-76-TwU">
-                                <rect key="frame" x="163" y="521" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="CancelAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RTv-QF-GLr"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhn-Dx-ZeA">
-                                <rect key="frame" x="282" y="521" width="39" height="30"/>
+                                <rect key="frame" x="229" y="509" width="61" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
-                                    <action selector="ResetAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lXj-tr-S5a"/>
+                                    <action selector="resetAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xKE-iW-2v3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSn-AI-rl6">
@@ -82,6 +66,14 @@
                                 <color key="textColor" red="0.0" green="0.585693359375" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtE-ws-YxI">
+                                <rect key="frame" x="104" y="509" width="77" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start / stop"/>
+                                <connections>
+                                    <action selector="startStopAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MNV-vp-jqQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -92,14 +84,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Demo" id="TA7-xH-prL"/>
                     <connections>
-                        <outlet property="CancelButton" destination="xST-76-TwU" id="eHJ-4d-cBp"/>
                         <outlet property="ResetButton" destination="jhn-Dx-ZeA" id="eaX-IV-e0O"/>
                         <outlet property="startButton" destination="TtE-ws-YxI" id="naP-65-6Ww"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-774" y="1206"/>
+            <point key="canvasLocation" x="-775.20000000000005" y="1205.8470764617691"/>
         </scene>
     </scenes>
 </document>

@@ -19,7 +19,7 @@ extension UIView.AChain {
 
     func rotate(_ layer: CALayer, by angle: CGFloat) -> UIView.AChain {
         return animation {
-            layer.transform =  CATransform3DRotate(layer.transform, angle, 0.0, 0.0, 1.0)
+            layer.transform = CATransform3DRotate(layer.transform, angle, 0.0, 0.0, 1.0)
         }
     }
 
@@ -57,7 +57,7 @@ extension UIView {
     }
 
     func rotate(by angle: Float) {
-        layer.transform =  CATransform3DRotate(layer.transform, CGFloat(angle), 0.0, 0.0, 1.0)
+        layer.transform = CATransform3DRotate(layer.transform, CGFloat(angle), 0.0, 0.0, 1.0)
     }
 
     func scale(to size: CGSize) {
