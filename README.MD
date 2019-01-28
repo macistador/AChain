@@ -46,7 +46,7 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ### This is how you would do some chained animations with raw UIKit
 
-Classic method 1 with raw UIKit
+Classic method 1 with __raw UIKit__
 ```swift
    UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseIn], animations: {
        var transform = CATransform3DTranslate(view.layer.transform, 100, 35, 0)
@@ -69,7 +69,7 @@ Classic method 1 with raw UIKit
    }
 ```
 
-Classic method 2 with raw UIKit
+Classic method 2 with __raw UIKit__
 ```swift
    UIView.animateKeyframes(withDuration: 5, delay: 0, options: .calculationModeCubic, animations: {
        UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.25) {
@@ -86,7 +86,8 @@ Classic method 2 with raw UIKit
    })
 ```
 
-### Now let's a look at how AChain can make your code cleaner and easier to read :
+
+### Now let's have a look at how *AChain* can make your code cleaner and easier to read :
 
 First sample with 3 chained steps reproducing the same animation in different ways
 ```swift
@@ -109,12 +110,14 @@ UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim
     .move(view.layer, by: [100, 35])
     .rotate(view.layer, by: 30)
 
-    // .chain(...)
+    // repeat...
+    // .chain(  )
     // [...]
 
     .animate()
 ```
-All animations between each chain step are executed simultaneously
+
+> All animations between each chain step are executed simultaneously
 
 
 By keeping a reference to the chain you can
