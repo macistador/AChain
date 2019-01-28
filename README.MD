@@ -11,6 +11,7 @@ This project is made for simplicity, ease of use and ease of read.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Credits](#credits)
 - [License](#license)
 
 ## Features
@@ -18,8 +19,9 @@ This project is made for simplicity, ease of use and ease of read.
 - [x] Chainable animations
 - [x] Very close to the UIView.animate(...) native API
 - [x] Builtin elementary animations (move, rotate, scale, alpha)
-- [x] ...
-- [x] ...
+- [x] Lightweight
+- [x] Multiple styles, more UIKit-compatible or more concise
+- [] ...
 
 ## Requirements
 
@@ -144,6 +146,10 @@ activeChain.animate()
 // [...]
 activeChain.cancel() // stop the animation, at the end of the current executing chain step
 ```
+
+## Credits
+
+AChain is developed and maintained by Michel-André Chirita. You can follow me on Twitter at @Macistador for updates.
 
 ## License
 
