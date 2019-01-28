@@ -1,6 +1,9 @@
-[Insert logo]
+![Alamofire: Elegant Networking in Swift](https://raw.githubusercontent.com/Macistador/AChain/master/Ressources/AChain-logo.png)
 
-AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AChain.svg)](https://img.shields.io/cocoapods/v/AChain.svg)
+[![Platform](https://img.shields.io/cocoapods/p/AChain.svg?style=flat)](https://macistador.github.io/AChain)
+
+AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib in Swift
 
 - [Features](#features)
 - [Requirements](#requirements)
