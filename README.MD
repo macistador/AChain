@@ -84,7 +84,7 @@ Classic method 2 with __raw UIKit__
    })
 ```
 
-
+&nbsp;
 ### Now let's have a look at how *AChain* can make your code cleaner and easier to read :
 
 First sample with 3 chained steps reproducing the same animation in different ways
@@ -114,9 +114,9 @@ UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim
 
     .animate()
 ```
-
+&nbsp;
 > All animations between each chain step are executed simultaneously
-
+&nbsp;
 
 By keeping a reference to the chain you can
 - add more steps after the initial definition
@@ -124,7 +124,7 @@ By keeping a reference to the chain you can
 - cancel it anytime
 
 ```swift
-activeChain = UIView
+let activeChain = UIView
     .chainAnimate(withDuration: 1.0)
     .move(view.layer, by: [100, 35])
     .rotate(view.layer, by: 30)
