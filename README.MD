@@ -3,8 +3,10 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AChain.svg)](https://img.shields.io/cocoapods/v/AChain.svg)
 [![Platform](https://img.shields.io/cocoapods/p/AChain.svg?style=flat)](https://macistador.github.io/AChain)
 
-AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib in Swift
+AChain is a lightweight, syntax-similar to default UIKit, yet powerful animation lib in Swift.
 This project is made for simplicity, ease of use and ease of read
+
+[Insert here Gif demo]
 
 - [Features](#features)
 - [Requirements](#requirements)
@@ -23,7 +25,7 @@ This project is made for simplicity, ease of use and ease of read
 ## Requirements
 
 - iOS 10.0+
-- Xcode 10.1+
+- Xcode 10.2+
 - Swift 4.2+
 
 ## Installation
