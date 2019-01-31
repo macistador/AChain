@@ -72,3 +72,21 @@ extension UIView {
         layer.transform = CATransform3DTranslate(layer.transform, offset.x, offset.y, 0)
     }
 }
+
+// MARK: helpers
+
+/// Syntactic sugar for expressing a CGPoint with the format [x,y]
+extension CGPoint: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: CGFloat...) {
+        assert(elements.count == 2)
+        self.init(x: elements[0], y: elements[1])
+    }
+}
+
+/// Syntactic sugar for expressing a CGSize with the format [height,width]
+extension CGSize: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: CGFloat...) {
+        assert(elements.count == 2)
+        self.init(width: elements[0], height: elements[1])
+    }
+}

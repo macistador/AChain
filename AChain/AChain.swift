@@ -21,10 +21,10 @@ extension UIView {
 
     class AChain {
 
-        var parameters : ChainAnimationParameters
+        private var parameters : ChainAnimationParameters
         var completed: Bool   = false
         var isCancelled: Bool = false
-        var previousChain: AChain?
+        private var previousChain: AChain?
 
         /// Chain two animations
         /// - Parameter duration: The total duration of the animations /// ????
@@ -43,7 +43,12 @@ extension UIView {
             return newChain
         }
 
-        /// FIXME: documentation needed...
+        /// Init the chain
+        ///
+        /// - Parameters:
+        ///   - duration: duration in seconds of the first chain step animations
+        ///   - delay: delay in seconds before the first chain animations
+        ///   - options: options
         convenience init(withDuration duration : TimeInterval = 0, delay: TimeInterval = 0, options: UIView.AnimationOptions = []) {
             var parameters         = ChainAnimationParameters(duration: duration)
             parameters.options     = options
@@ -51,24 +56,33 @@ extension UIView {
             self.init(with: parameters)
         }
 
-        /// FIXME: documentation needed...
-        init(with parameters: ChainAnimationParameters) {
+        /// Initializer of a chain step
+        /// Not designed to be called directly
+        ///
+        /// - Parameter parameters: parameters of the chain step
+        private init(with parameters: ChainAnimationParameters) {
             self.parameters = parameters
         }
 
-        /// FIXME: documentation needed...
+        /// Add an animation closure to this step pool of animations
+        ///
+        /// - Parameter animation: animation closure
+        /// - Returns: the chain step
         func animation(_ animation: @escaping animBlockType) -> Self {
             self.parameters.animations.append(animation)
             return self
         }
 
-        /// FIXME: documentation needed...
+        /// Set the completion closure and propagate to the previous steps
+        ///
+        /// - Parameter completion: the completion closure
+        /// - Returns: the chain step
         func completion(_ completion: @escaping completBlockType) -> Self {
             self.parameters.completion = completion
             return self
         }
 
-        /// FIXME: documentation needed...
+        /// Cancel the chain by propagatting the cancel signal to all previous steps
         func cancel() {
             if self.previousChain != nil {
                 _ = self.previousChain?.cancel()
@@ -76,7 +90,10 @@ extension UIView {
             self.isCancelled = true
         }
 
-        /// FIXME: documentation needed...
+        /// Set the cancel completion and propagate it to the previous steps
+        ///
+        /// - Parameter cancelCompletion: cancel completion called if the chain is cancelled
+        /// - Returns: this chain step
         func cancelCompletion(_ cancelCompletion: @escaping cancelBlockType) -> Self {
             if self.previousChain != nil {
                 _ = self.previousChain?.cancelCompletion(cancelCompletion)
@@ -87,8 +104,8 @@ extension UIView {
             return self
         }
 
-        /// Launches the animation(s)
-        /// To be called after the animation declaration
+        /// Launches the chain animation(s)
+        /// To be called after all the steps are declared
         func animate() {
 
             if isCancelled {
@@ -131,7 +148,7 @@ extension UIView {
      * It also contains the parameters of the animation
      */
 
-    struct ChainAnimationParameters {
+    fileprivate struct ChainAnimationParameters {
         var animations: [animBlockType]         = [{}]
         var completion: completBlockType        = {finished in}
         var cancelCompletion: cancelBlockType   = {}
@@ -156,25 +173,9 @@ extension UIView {
 // MARK: Sugar syntax
 
 extension UIView {
+
+    /// Alternative initializer of a chain
     static func chainAnimate(withDuration duration : TimeInterval, delay: TimeInterval = 0, options: UIView.AnimationOptions = [], anim: @escaping animBlockType = {}) -> AChain {
         return AChain().chain(withDuration: duration, delay: delay, options: options, anim: anim)
-    }
-}
-
-
-
-// MARK: helpers
-
-extension CGPoint: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: CGFloat...) {
-        assert(elements.count == 2)
-        self.init(x: elements[0], y: elements[1])
-    }
-}
-
-extension CGSize: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: CGFloat...) {
-        assert(elements.count == 2)
-        self.init(width: elements[0], height: elements[1])
     }
 }

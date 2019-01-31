@@ -121,8 +121,6 @@ UIView.chainAnimate(withDuration: 1.0, delay: 0.5, options: [.curveEaseIn], anim
 &nbsp;
 > All animations between each chain step are executed simultaneously
 &nbsp;
-&nbsp;
-
 By keeping a reference to the chain you can:
 - add more steps after the initial definition
 - start the animation in a different moment
