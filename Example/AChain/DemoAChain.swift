@@ -143,31 +143,80 @@ extension DemoAChain {
             // [...]
 
             .animate()
+
     }
 
     fileprivate func startAction3() {
 
         /// Sample with an optional reference needed to cancel the animation
-        activeChain = UIView
-            .chainAnimate(withDuration: 1.0)
-            .move(self.redView.layer, by: [100, 35])
-            .rotate(self.redView.layer, by: 30)
-
-            .chain(withDuration: 1.5)
-            .move(self.redView.layer, by: [100, 35]) //FIXME: not animated !
-            .rotate(self.redView.layer, by: 30)
-
-            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
-            .move(self.redView.layer, by: [100, 35])
-            .rotate(self.redView.layer, by: 30)
-
-            .cancelCompletion { self.showVanishing(message: "Animation canceled") }  //FIXME: not called !
-
-        // [...]
-
-        activeChain?.animate()
+//        activeChain = UIView
+//            .chainAnimate(withDuration: 1.0)
+//            .move(self.redView.layer, by: [100, 35])
+//            .rotate(self.redView.layer, by: 30)
+//
+//            .chain(withDuration: 1.5)
+////            .move(self.redView.layer, by: [100, 35]) //FIXME: not animated !
+//            .rotate(self.redView.layer, by: 30)
+//
+//            .chain(withDuration: 3.0, delay: 0.5, options: [.curveEaseOut])
+//            .move(self.redView.layer, by: [100, 35])
+////            .rotate(self.redView.layer, by: 30)
+//
+//            .cancelCompletion { self.showVanishing(message: "Animation canceled") }  //FIXME: not called !
+//
+//        // [...]
+//
+//        activeChain?.animate()
         // [...]
 //        activeChain?.cancel() // stop the animation, at the end of the current executing chain step
+
+//        var t = self.redView.transform
+
+        UIView.animate(withDuration: 1.0, animations: {
+            self.view.setNeedsLayout()
+            self.view.setNeedsDisplay()
+            self.view.layoutIfNeeded()
+            self.redView.setNeedsLayout()
+            self.redView.setNeedsDisplay()
+            self.redView.layoutIfNeeded()
+//            self.redView.transform = CGAffineTransform.identity
+            self.redView.transform = self.redView.transform.translatedBy(x: 30, y: 50)
+//            t = t.translatedBy(x: 30, y: 50)
+//            self.redView.transform = t
+            self.view.setNeedsLayout()
+            self.view.setNeedsDisplay()
+            self.view.layoutIfNeeded()
+            self.redView.setNeedsLayout()
+            self.redView.setNeedsDisplay()
+            self.redView.layoutIfNeeded()
+        }) { (a) in
+            self.view.setNeedsLayout()
+            self.view.setNeedsDisplay()
+            self.view.layoutIfNeeded()
+            self.redView.setNeedsLayout()
+            self.redView.setNeedsDisplay()
+            self.redView.layoutIfNeeded()
+            self.redView.transform = self.redView.transform.inverted()
+            UIView.animate(withDuration: 1.0, animations: {
+                self.view.setNeedsLayout()
+                self.view.setNeedsDisplay()
+                self.view.layoutIfNeeded()
+                self.redView.setNeedsLayout()
+                self.redView.setNeedsDisplay()
+                self.redView.layoutIfNeeded()
+                    self.redView.frame = self.redView.frame
+//                self.redView.transform = CGAffineTransform.identity
+                self.redView.transform = CGAffineTransform(rotationAngle: 45.degreesToRadians)
+//                t = t.rotated(by: 45.degreesToRadians)
+//                self.redView.transform = t
+                self.view.setNeedsLayout()
+                self.view.setNeedsDisplay()
+                self.view.layoutIfNeeded()
+                self.redView.setNeedsLayout()
+                self.redView.setNeedsDisplay()
+                self.redView.layoutIfNeeded()
+            }) //, completion: { a in self.redView.transform = CGAffineTransform.identity })
+        }
     }
 }
 

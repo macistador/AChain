@@ -19,19 +19,29 @@ extension UIView.AChain {
 
     func rotate(_ layer: CALayer, by angle: CGFloat) -> UIView.AChain {
         return animation {
-            layer.transform = CATransform3DRotate(layer.transform, angle, 0.0, 0.0, 1.0)
+            print("👉 >>> rotate on transform: \(layer.affineTransform())")
+//            layer.transform = CATransform3DRotate(layer.transform, angle, 0.0, 0.0, 1.0)
+            let newTransform = layer.affineTransform().rotated(by: angle)
+            layer.setAffineTransform(newTransform)
         }
     }
 
     func scale(_ layer: CALayer, to size: CGSize) -> UIView.AChain {
         return animation {
-            layer.transform = CATransform3DScale(layer.transform, size.width, size.height, 1.0)
+            print("👉 >>> Scale on transform: \(layer.affineTransform())")
+//            layer.transform = CATransform3DScale(layer.transform, size.width, size.height, 1.0)
+            let newTransform = layer.affineTransform().scaledBy(x: size.width, y: size.height)
+            
+            layer.setAffineTransform(newTransform)
         }
     }
 
     func move(_ layer: CALayer, by offset: CGPoint) -> UIView.AChain {
         return animation {
-            layer.transform = CATransform3DTranslate(layer.transform, offset.x, offset.y, 0)
+            print("👉 >>> move on transform: \(layer.affineTransform())")
+//            layer.transform = CATransform3DTranslate(layer.transform, offset.x, offset.y, 0)
+            let newTransform = layer.affineTransform().translatedBy(x: offset.x, y: offset.y)
+            layer.setAffineTransform(newTransform)
         }
     }
 
